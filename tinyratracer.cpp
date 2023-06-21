@@ -9,7 +9,7 @@ struct Material {
     Material(const float &r, const Vec4f &a, const Vec3f &color, const float &spec) : refractive_index(r), albedo(a), diffuse_color(color), specular_exponent(spec) {}
     Material() : refractive_index(1), albedo(1,0,0,0), diffuse_color(), specular_exponent() {}
     float refractive_index;
-    Vec4f albedo;//The parameter that determines the ability to reflect light
+    Vec4f albedo;
     Vec3f diffuse_color;
     float specular_exponent;
 };
@@ -29,9 +29,9 @@ struct Sphere {
     Sphere(const Vec3f &c, const float &r,Material &m) : center(c), radius(r),material(m) {}
 
     bool ray_intersect(const Vec3f &orig, const Vec3f &dir, float &t0) const {
-        Vec3f L = center - orig;//A vector connecting the camera (origin) and the center of the sphere
-        float tca = L*dir;//proection
-        float d2 = L*L - tca*tca;//Square of the projection length
+        Vec3f L = center - orig;
+        float tca = L*dir;
+        float d2 = L*L - tca*tca;
         if (d2 > radius*radius) return false;
         float thc = sqrtf(radius*radius - d2);
         t0       = tca - thc;
@@ -46,7 +46,7 @@ Vec3f reflect(const Vec3f &I, const Vec3f &N) {
     return I - N*2.f*(I*N);
 }
 
-Vec3f refract(const Vec3f &I, const Vec3f &N, const float &refractive_index) { 
+Vec3f refract(const Vec3f &I, const Vec3f &N, const float &refractive_index) { // Snell's law
     float cosi = - std::max(-1.f, std::min(1.f, I*N));
     float etai = 1, etat = refractive_index;
     Vec3f n = N;
@@ -56,7 +56,7 @@ Vec3f refract(const Vec3f &I, const Vec3f &N, const float &refractive_index) {
     }
     float eta = etai / etat;
     float k = 1 - eta*eta*(1 - cosi*cosi);
-    return k < 0 ? Vec3f(0,0,0) : I*eta + n*(eta * cosi - sqrtf(k));// Shell's Law
+    return k < 0 ? Vec3f(0,0,0) : I*eta + n*(eta * cosi - sqrtf(k));
 }
 
 bool scene_intersect(const Vec3f &orig, const Vec3f &dir, const std::vector<Sphere> &spheres, Vec3f &hit, Vec3f &N, Material &material) {
