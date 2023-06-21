@@ -1,4 +1,4 @@
-# Ignore content built with CMake
-build/
-/.vscode
-/testiny/tinyraytracerold.cpp
+.vscode/
+out.ppm
+raytracer.exe
+tinyraytracerold.cpp
