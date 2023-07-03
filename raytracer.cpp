@@ -5,7 +5,7 @@
 #include <vector>
 #include "geometry.h"
 
-const double PI = 3.14159265359;
+const float PI = 3.14159265359;
 
 struct Material {
     Material(const float &r, const Vec4f &a, const Vec3f &color, const float &spec) : refractive_index(r), albedo(a), diffuse_color(color), specular_exponent(spec) {}
@@ -72,7 +72,7 @@ bool scene_intersect(const Vec3f &orig, const Vec3f &dir, const std::vector<Sphe
             material = spheres[i].material;
         }
     }
-     float checkerboard_dist = std::numeric_limits<float>::max();
+    float checkerboard_dist = std::numeric_limits<float>::max();
     if (fabs(dir.y)>1e-3)  {
         float d = -(orig.y+4)/dir.y; // the checkerboard plane has equation y = -4
         Vec3f pt = orig + dir*d;
@@ -126,7 +126,7 @@ void render(const std::vector<Sphere> &spheres,const std::vector<Light> &lights)
 
     for (size_t j = 0; j<height; j++) {
         for (size_t i = 0; i<width; i++) {
-            float x =  (2*(i + 0.5)/(float)width  - 1)*tan(fov/2.)*width/(float)height;
+            float x =  (2*(i + 0.5)/(float)width  - 1)*tan(fov/2.)*width/(float)height; //calculating the distance from the edge of the screen
             float y = -(2*(j + 0.5)/(float)height - 1)*tan(fov/2.);
             Vec3f dir = Vec3f(x, y, -1).normalize();
             framebuffer[i+j*width] = cast_ray(Vec3f(0,0,0), dir, spheres,lights);
