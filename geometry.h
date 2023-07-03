@@ -1,13 +1,9 @@
-#ifndef __GEOMETRY_Htesttiny__
+#ifndef __GEOMETRY_H__
 #define __GEOMETRY_H__
 #include <cmath>
 #include <vector>
 #include <cassert>
 #include <iostream>
-
-/*This file contains all the logic of interaction between geometric objects, such as vectors,
-interactions between vectors and vectors, and vectors and numbers,
-representing points in a three-dimensional coordinate system.*/
 
 template <size_t DIM, typename T> struct vec {
     vec() { for (size_t i=DIM; i--; data_[i] = T()); }

@@ -2,3 +2,8 @@
 out_Light_Refl_and_Refr_and_Chess.ppm
 raytracer.exe
 tinyraytracerold.cpp
+a.exe
+.gitmodules
+.gitignore
+duck.obj
+envmap.jpg

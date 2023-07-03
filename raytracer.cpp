@@ -5,6 +5,8 @@
 #include <vector>
 #include "geometry.h"
 
+const double PI = 3.14159265359;
+
 struct Material {
     Material(const float &r, const Vec4f &a, const Vec3f &color, const float &spec) : refractive_index(r), albedo(a), diffuse_color(color), specular_exponent(spec) {}
     Material() : refractive_index(1), albedo(1,0,0,0), diffuse_color(), specular_exponent() {}
@@ -119,10 +121,9 @@ Vec3f cast_ray(const Vec3f &orig, const Vec3f &dir, const std::vector<Sphere> &s
 void render(const std::vector<Sphere> &spheres,const std::vector<Light> &lights) {
     const int width    = 1024;
     const int height   = 768;
-    const int fov      = M_PI/2.;
+    const int fov      = PI/2.;
     std::vector<Vec3f> framebuffer(width*height);
 
-    #pragma omp parallel for
     for (size_t j = 0; j<height; j++) {
         for (size_t i = 0; i<width; i++) {
             float x =  (2*(i + 0.5)/(float)width  - 1)*tan(fov/2.)*width/(float)height;
